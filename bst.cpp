@@ -43,7 +43,7 @@ node *buildBST(node *root, int d)
     }
     return root;
 }
-void takeinput(node *root)
+void takeinput(node* &root)
 {
     int d;
     cin >> d;
