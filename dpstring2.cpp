@@ -7,7 +7,7 @@ const int MOD = 1000000007;
 
 int countPossibleArrays(string S, int K) {
     int N = S.size();
-    vector<long long> dp(N + 1, 0);
+    vector<int> dp(N + 1, 0);
     dp[0] = 1;
 
     for (int i = 1; i <= N; i++) {
