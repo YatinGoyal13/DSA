@@ -71,7 +71,7 @@ int countPossibleArrays(const string &s, int K)
         {
             if (i == 1)
             return 0;
-          dp[i] = 0;
+          dp[i] = dp[i-1];
             
         }
         else if((s[i-1]-'0')>K)
