@@ -36,9 +36,7 @@ void printBoard(vector<vector<char>> &puzzle)
  * 
  * @return a vector of vectors of characters (vector<vector<char>>).
  */
-vector<vector<char>> checkHorizontal(int x, int y,
-                                     vector<vector<char>> matrix,
-                                     string currentWord)
+vector<vector<char>> checkHorizontal(int x, int y,vector<vector<char>> matrix,string currentWord)
 {
     int n = currentWord.length();
 
