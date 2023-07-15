@@ -53,15 +53,14 @@ public:
         {
             int topp = topo.top();
             topo.pop();
-            if(dist[topp]!=INT_MAX)
-            for (auto i : adj[topp])
-            {
-                if(dist[topp]+i.second < dist[i.first])
+            if (dist[topp] != INT_MAX)
+                for (auto i : adj[topp])
                 {
-                    dist[i.first]=dist[topp]+i.second;
+                    if (dist[topp] + i.second < dist[i.first])
+                    {
+                        dist[i.first] = dist[topp] + i.second;
+                    }
                 }
-
-            }
         }
     }
 };
@@ -89,10 +88,12 @@ int main()
     }
     int src = 1;
     vector<int> dist(n, INT_MAX);
-G.getShortestPath(topo,src,dist);
-for(int i=src ;i<n ;++i){
-    cout<< "Distance of node "<<i<<" from source is: "; cout << dist[i];
-    cout<<endl;
-}
+    G.getShortestPath(topo, src, dist);
+    for (int i = src; i < n; ++i)
+    {
+        cout << "Distance of node " << i << " from source is: ";
+        cout << dist[i];
+        cout << endl;
+    }
     return 0;
 }
