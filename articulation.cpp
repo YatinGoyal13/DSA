@@ -25,7 +25,7 @@ void dfs(int node, int parent, int timer, vector<int> &disc, vector<int> &low,
         {
             dfs(nbr, node, timer, disc, low, vis, adj, result);
             low[node] = min(low[node], low[nbr]);
-            if (low[nbr] >= disc[node] && parent!=-1)
+            if (low[nbr] >= disc[node] && parent != -1)
             {
                 result[node]=1;
             }
@@ -37,7 +37,7 @@ void dfs(int node, int parent, int timer, vector<int> &disc, vector<int> &low,
             low[node] = min(low[node], disc[nbr]);
         }
     }
-    if(parent==1 && child>1)
+    if(parent==-1 && child>1)
     {
         result[node]=1;
     }
@@ -78,7 +78,7 @@ int main()
    cout << "Articulation Points: ";
    for (int i = 0; i < n; i++)
    {
-    if(ap[i]==1)
+    if(ap[i]!=0)
     {
         cout<<i<<" ";
     }
