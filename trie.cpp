@@ -32,7 +32,7 @@ public:
     TrieNode *root;
     trie()
     {
-        root=new TrieNode('\0');
+        root = new TrieNode('\0');
     }
     void insertUtil(TrieNode *root, string word)
     {
@@ -62,12 +62,12 @@ public:
         insertUtil(root, word);
     }
 
-    bool searchUtil(TrieNode* root,string word)
+    bool searchUtil(TrieNode *root, string word)
     {
-       // base
+        // base
         if (word.length() == 0)
         {
-            return  root->isterminal ;
+            return root->isterminal;
         }
         int ind = word[0] - 'A';
         TrieNode *child;
@@ -81,22 +81,75 @@ public:
             // absent
             return false;
         }
-        return searchUtil(child, word.substr(1)); 
-
+        return searchUtil(child, word.substr(1));
     }
     bool searchWord(string word)
     {
-        return searchUtil(root,word);
+        return searchUtil(root, word);
+    }
+
+    bool deleteUtil(TrieNode *root, string word, int index)
+    {
+        // Base case: If the word is empty, mark the current node as non-terminal
+        if (index == word.length())
+        {
+            if (!root->isterminal)
+                return false; // Word doesn't exist in trie, return false
+            root->isterminal = false;
+            // Check if the current node has any children
+            for (int i = 0; i < 26; i++)
+            {
+                if (root->childern[i] != NULL)
+                    return false; // Word is a prefix of another word, return false
+            }
+            return true; // Word is successfully deleted
+        }
+
+        int ind = word[index] - 'A';
+        TrieNode *child = root->childern[ind];
+        if (child == NULL)
+            return false; // Word doesn't exist in trie, return false
+
+        // Recursively delete the remaining part of the word
+        bool canDelete = deleteUtil(child, word, index + 1);
+
+        // If canDelete is true, it means that the rest of the word has been deleted
+        // and the current node has no other children, so it can be safely deleted
+        if (canDelete)
+        {
+            delete child;
+            root->childern[ind] = NULL;
+            // Check if the current node is also a terminal node
+            for (int i = 0; i < 26; i++)
+            {
+                if (root->childern[i] != NULL)
+                    return false; // Word is a prefix of another word, return false
+            }
+            return true; // Word is successfully deleted
+        }
+
+        return false; // Word doesn't exist in trie, return false
+    }
+
+    // Public function to delete a word from the trie
+    bool deleteWord(string word)
+    {
+        return deleteUtil(root, word, 0);
     }
 };
 int main()
 {
-    trie* t=new trie();
+    trie *t = new trie();
     t->insertWord("SEXYY");
     t->insertWord("GULLU");
     t->insertWord("JAGGU");
+    t->insertWord("KKR");
     t->insertWord("KK");
     t->insertWord("DOGI");
-    cout<<"Present "<<t->searchWord("KK")<<endl;;
+    cout << "Present " << t->searchWord("KK") << endl;
+     t->deleteWord("KK");
+
+    cout << "Present " << t->searchWord("KK") << endl;
+    cout << "Present " << t->searchWord("KKR") << endl;
     return 0;
 }
