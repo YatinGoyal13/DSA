@@ -4,32 +4,23 @@
 using namespace std;
 
 vector<int> getNumPoints(vector<int> layers, vector<int> energy, long k) {
-    int n = layers.size();
+int n = layers.size();
     vector<int> points(n, 0);
 
-    long remainingEnergy = k;
-    int totalPoints = 0;
-
     for (int i = 0; i < n; i++) {
-        if (remainingEnergy >= layers[i]) {
-            int breachCount = remainingEnergy / layers[i];
-            points[i] += breachCount;
-            totalPoints += breachCount;
-            remainingEnergy -= breachCount * layers[i];
+        int remainingEnergy = k;
+        for (int j = i; j < n; j++) {
+            if (remainingEnergy >= layers[j]) {
+                remainingEnergy -= layers[j];
+                if(energy[j]<=remainingEnergy)
+                points[i]++;
+            } else {
+                break;
+            }
         }
     }
 
-    vector<int> result(n);
-
-    for (int i = 0; i < n; i++) {
-        result[i] = totalPoints;
-        if (remainingEnergy >= layers[i]) {
-            remainingEnergy -= layers[i];
-            result[i]++;
-        }
-    }
-
-    return result;
+    return points;
 }
 int main()
 {
