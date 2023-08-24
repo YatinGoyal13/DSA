@@ -7,7 +7,7 @@ int main() {
     cin>>n;
     vector<int> stu;
     int mm=0;
-    int mmx=INT_MAX;
+    int mmx=INT_MIN;
     for(int i=0;i<n;i++)
     {
         int d;
@@ -34,7 +34,7 @@ int main() {
         }
         j++;
         count++;
-        if (j==n-1)
+        if (j==n)
         {
             j=0;
         }
