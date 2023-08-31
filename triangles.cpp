@@ -4,35 +4,31 @@ using namespace std;
 
 const int MOD = 998244353;
 
+int solve(int n) {
+    vector<int> dp(n+1, 0);
+    dp[3] = 1;
+
+    for (int i = 4; i <= n; ++i) {
+        dp[i] = 0;
+        for (int j = 1; j <= i - 2; ++j) {
+            for (int k = j + 2; k <= i - 1; ++k) {
+                dp[i] = (dp[i] + (1LL * dp[j] * dp[i - k]) % MOD) % MOD;
+            }
+        }
+    }
+
+    return dp[n];
+}
+
 int main() {
     int T;
     cin >> T;
 
-    while (T--) {
+    for (int t = 0; t < T; ++t) {
         int n;
         cin >> n;
-
-        vector<long long> dp(n+1, 0);
-        dp[3] = 1;
-
-        for (int i = 4; i <= n; ++i) {
-            for (int j = 1; j <= i - 2; ++j) {
-                for (int k = j + 2; k <= i - 1; ++k) {
-                    dp[i] = (dp[i] + dp[j] * dp[k]) % MOD;
-                }
-            }
-        }
-
-        long long total_ways = dp[n];
-        for (int i = 3; i <= n; ++i) {
-            total_ways = (total_ways - dp[i]) % MOD;
-        }
-
-        if (total_ways < 0) {
-            total_ways += MOD;
-        }
-
-        cout << total_ways << endl;
+        int result = solve(n);
+        cout << result << endl;
     }
 
     return 0;
