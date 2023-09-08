@@ -21,5 +21,5 @@ int decimalNumber(string str)
 int main() {
     string s;
     cin>>s;
-    cout<<decimalNumber(s);
+    cout<<decimalNumber(s)<<endl;
     }
